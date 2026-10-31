@@ -1,0 +1,25 @@
+{
+  "name": "iman-umar-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D animated developer portfolio \u2014 the home of animation and AI",
+  "scripts": {
+    "build": "esbuild js/src/main.js --bundle --minify --format=iife --target=es2019 --outfile=js/app.js",
+    "dev": "esbuild js/src/main.js --bundle --format=iife --target=es2019 --outfile=js/app.js --watch",
+    "serve": "python -m http.server 5173",
+    "test": "node tests/run.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "jsdom": "^25.0.0",
+    "@fontsource/syne": "^5.1.0",
+    "@fontsource/space-grotesk": "^5.1.0",
+    "@fontsource/jetbrains-mono": "^5.1.0"
+  },
+  "type": "module"
+}
