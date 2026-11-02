@@ -69,28 +69,56 @@ except ImportError:  # lets build_html() be tested without Streamlit installed
     st = None
 
 if st is not None:
-    st.set_page_config(page_title="Iman Umar — Portfolio", page_icon="✨", layout="wide", initial_sidebar_state="collapsed")
+    st.set_page_config(
+        page_title="Iman Umar — Portfolio",
+        page_icon="✨",
+        layout="wide",
+        initial_sidebar_state="collapsed"
+    )
 
-   def _page() -> str:
-    MISSING.clear()
-    return build_html()
+    def _page() -> str:
+        MISSING.clear()
+        return build_html()
 
-    # remove Streamlit's own chrome and let the portfolio fill the whole window
     st.markdown(
         """
         <style>
-          header, footer, #MainMenu, [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"] {display:none !important;}
-          .stApp, .main, section.main > div, [data-testid="stMain"], [data-testid="stAppViewContainer"] {padding:0 !important; margin:0 !important; background:#000 !important;}
-          .block-container, [data-testid="stMainBlockContainer"] {padding:0 !important; max-width:100% !important;}
-          [data-testid="stVerticalBlock"] {gap:0 !important;}
-          iframe {position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important; border:0 !important; z-index:9999;}
+        header, footer, #MainMenu,
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"],
+        [data-testid="stStatusWidget"] {
+            display: none !important;
+        }
+        .stApp, .main, section.main > div,
+        [data-testid="stMain"],
+        [data-testid="stAppViewContainer"] {
+            padding: 0 !important;
+            margin: 0 !important;
+            background: #000 !important;
+        }
+        .block-container, [data-testid="stMainBlockContainer"] {
+            padding: 0 !important;
+            max-width: 100% !important;
+        }
+        iframe {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            border: 0 !important;
+            z-index: 9999;
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
-   _html = _page()
 
-if MISSING:
-    st.error("Missing files on GitHub: " + ", ".join(sorted(set(MISSING))))
+    _html = _page()
 
-components.html(_html, height=900, scrolling=True)
+    if MISSING:
+        st.error(
+            "Missing files on GitHub: "
+            + ", ".join(sorted(set(MISSING)))
+        )
+
+    components.html(_html, height=900, scrolling=True)
