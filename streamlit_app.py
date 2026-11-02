@@ -71,10 +71,9 @@ except ImportError:  # lets build_html() be tested without Streamlit installed
 if st is not None:
     st.set_page_config(page_title="Iman Umar — Portfolio", page_icon="✨", layout="wide", initial_sidebar_state="collapsed")
 
-    @st.cache_data(show_spinner="Loading portfolio…")
-    def _page() -> str:
-        MISSING.clear()
-        return build_html()
+   def _page() -> str:
+    MISSING.clear()
+    return build_html()
 
     # remove Streamlit's own chrome and let the portfolio fill the whole window
     st.markdown(
@@ -89,7 +88,9 @@ if st is not None:
         """,
         unsafe_allow_html=True,
     )
-    _html = _page()
-    if MISSING:  # shown on top of the page so you can see exactly what to upload to GitHub
-        st.error("Missing files on GitHub: " + ", ".join(sorted(set(MISSING))))
-    components.html(_html, height=900, scrolling=True)
+   _html = _page()
+
+if MISSING:
+    st.error("Missing files on GitHub: " + ", ".join(sorted(set(MISSING))))
+
+components.html(_html, height=900, scrolling=True)
