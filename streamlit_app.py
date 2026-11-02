@@ -12,7 +12,15 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 
 
+MISSING: list = []
+
+
 def _data_uri(path: Path) -> str:
+    """Embed a file as a data: URI. A missing file is logged (not fatal) so the site still loads."""
+    if not path.is_file():
+        MISSING.append(str(path.relative_to(ROOT)))
+        print(f"[portfolio] MISSING FILE on GitHub: {path.relative_to(ROOT)}", flush=True)
+        return ""
     mime = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
     if path.suffix == ".woff2":
         mime = "font/woff2"
@@ -65,6 +73,7 @@ if st is not None:
 
     @st.cache_data(show_spinner="Loading portfolio…")
     def _page() -> str:
+        MISSING.clear()
         return build_html()
 
     # remove Streamlit's own chrome and let the portfolio fill the whole window
@@ -80,4 +89,7 @@ if st is not None:
         """,
         unsafe_allow_html=True,
     )
-    components.html(_page(), height=900, scrolling=True)
+    _html = _page()
+    if MISSING:  # shown on top of the page so you can see exactly what to upload to GitHub
+        st.error("Missing files on GitHub: " + ", ".join(sorted(set(MISSING))))
+    components.html(_html, height=900, scrolling=True)
