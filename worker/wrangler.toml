@@ -1,0 +1,9 @@
+name = "iman-portfolio-ai"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+# Comma-separated list of the sites allowed to call this worker (no trailing slash)
+ALLOWED_ORIGINS = "https://YOUR-SITE.pages.dev,https://your-domain.com"
+MODEL = "gpt-4o-mini"
+# ALLOW_LOCALHOST = "1"   # uncomment while testing on http://localhost:5173
